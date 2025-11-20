@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "dev": "tsx watch src/bot.ts",
+    "start": "pm2 start dist/bot.js",
+    "build": "tsup src/bot.ts --minify"
+  },
+  "devDependencies": {
+    "tsup": "^8.2.4",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "discord.js": "^14.25.0",
+    "dotenv": "^17.2.3",
+    "kazagumo": "^3.4.0",
+    "shoukaku": "github:shipgirlproject/Shoukaku#master"
+  }
+}
