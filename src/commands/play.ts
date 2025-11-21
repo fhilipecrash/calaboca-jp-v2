@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
-import type { GuildMember, CommandInteraction } from "discord.js";
+import { GuildMember, ChatInputCommandInteraction } from "discord.js";
 
 const data = new SlashCommandBuilder()
   .setName("play")
@@ -9,7 +9,7 @@ const data = new SlashCommandBuilder()
         .setDescription('Coloque o nome ou link da música que deseja tocar')
         .setRequired(true));
 
-async function execute(interaction: CommandInteraction) {
+async function execute(interaction: ChatInputCommandInteraction) {
   const member = interaction.member as GuildMember | null;
   if (!member || !member.voice.channel) {
     return interaction.reply('Você não está conectado a um canal de voz!');

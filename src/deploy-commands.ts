@@ -16,7 +16,7 @@ export async function deployCommands({ guildId, commandCollection }: DeployComma
   try {
     if (commandCollection) {
       for (const commandName in commands) {
-        const command = commands[commandName];
+        const command = commands[commandName as keyof typeof commands];
         commandCollection.set(command.data.name, command);
       }
     }

@@ -1,4 +1,11 @@
-import { Client, GatewayIntentBits, Events, Collection, MessageFlags } from "discord.js";
+import {
+  Client,
+  GatewayIntentBits,
+  Events,
+  Collection,
+  MessageFlags,
+  TextChannel
+} from "discord.js";
 import { Connectors } from "shoukaku";
 import { config } from "./config";
 import { deployCommands } from "./deploy-commands";
@@ -12,12 +19,11 @@ const Nodes = [{
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
 const kazagumo = new Kazagumo({
-    defaultSearchEngine: "youtube",
-    // MAKE SURE YOU HAVE THIS
-    send: (guildId, payload) => {
-        const guild = client.guilds.cache.get(guildId);
-        if (guild) guild.shard.send(payload);
-    }
+  defaultSearchEngine: "youtube",
+  send: (guildId, payload) => {
+    const guild = client.guilds.cache.get(guildId);
+    if (guild) guild.shard.send(payload);
+  }
 }, new Connectors.DiscordJS(client), Nodes);
 
 async function startBot() {
@@ -38,7 +44,7 @@ async function startBot() {
   });
 
   kazagumo.on("playerStart", (player, track) => {
-    client.channels.cache.get(player.textId)?.send({content: `Tocando **${track.title}** por **${track.author}**`})
+    (client.channels.cache.get(player.textId!) as TextChannel)?.send({content: `Tocando **${track.title}** por **${track.author}**`})
       .then(x => player.data.set("message", x));
   });
 
@@ -47,7 +53,7 @@ async function startBot() {
   });
 
   kazagumo.on("playerEmpty", (player) => {
-    client.channels.cache.get(player.textId)?.send({content: 'O canal de voz está vazio. Saindo...'})
+    (client.channels.cache.get(player.textId!) as TextChannel)?.send({content: 'O canal de voz está vazio. Saindo...'})
       .then(x => player.data.set("message", x));
     player.destroy();
   });
